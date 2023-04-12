@@ -16,7 +16,7 @@ const start = async () => {
   try {
     // Retrieve parcels payment_status=not-ready&
     const parcelsResponse = await axios.get(
-      `https://api.yalidine.app/v1/parcels/?order_by=date_last_status&page_size=100`,
+      `https://api.yalidine.app/v1/parcels/?order_by=date_last_status&page_size=50`,
       {
         headers: {
           "X-API-ID": "92129974643421801058",
@@ -48,7 +48,7 @@ const start = async () => {
     const trackingsStr = trackings.join(",");
 
     const historiesResponse = await axios.get(
-      `https://api.yalidine.app/v1/histories/?tracking=${trackingsStr}&page_size=900`,
+      `https://api.yalidine.app/v1/histories/?tracking=${trackingsStr}&page_size=1000`,
       {
         headers: {
           "X-API-ID": "92129974643421801058",
@@ -67,6 +67,14 @@ const start = async () => {
       wilaya_name: history.wilaya_name,
       commune_name: history.commune_name,
     }));
+    
+    const keys = ["created_at", "tracking"];
+    const filteredHistories = histories.filter(
+      (
+        (s) => (o) =>
+          ((k) => !s.has(k) && s.add(k))(keys.map((k) => o[k]).join("|"))
+      )(new Set())
+    );
 
     const { data, error } = await supabase
       .from("parcels")
@@ -83,7 +91,7 @@ const start = async () => {
 
     const { data: dataHistories, error: errorHistories } = await supabase
       .from("histories")
-      .upsert(histories)
+      .upsert(filteredHistories)
       .select();
 
     if (dataHistories) {
