@@ -41,6 +41,8 @@ const start = async () => {
       payment_status: parcel.payment_status,
       tracker_id: +parcel.order_id.replace("order_", ""),
       is_stopdesk: parcel.is_stopdesk,
+      price: parcel.price,
+      delivery_fee: parcel.delivery_fee,
     }));
 
     // Extract tracking numbers
