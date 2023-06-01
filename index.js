@@ -57,7 +57,7 @@ const start = async () => {
       last_status: parcel.last_status,
       address: parcel.address,
       payment_status: parcel.payment_status,
-      tracker_id: +parcel.order_id.replace("order_", ""),
+      tracker_id: 16 /* +parcel.order_id.replace("order_", "") */,
       is_stopdesk: parcel.is_stopdesk,
       price: parcel.price,
       delivery_fee: parcel.delivery_fee,
@@ -128,5 +128,3 @@ const start = async () => {
 };
 
 start();
-// }
-// );
