@@ -57,7 +57,7 @@ const start = async () => {
       last_status: parcel.last_status,
       address: parcel.address,
       payment_status: parcel.payment_status,
-      tracker_id: +parcel.order_id.replace("order_", "") != 21 ? +parcel.order_id.replace("order_", "") : 28,
+      tracker_id: +parcel.order_id.replace("order_", ""),
       is_stopdesk: !!parcel.stopdesk_id,
       price: parcel.price,
       delivery_fee: parcel.delivery_fee,
