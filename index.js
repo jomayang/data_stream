@@ -43,25 +43,30 @@ const start = async () => {
         },
       }
     );
-    const parcels = parcelsResponse.data.data.map((parcel) => ({
-      tracking: parcel.tracking,
-      first_name: parcel.firstname,
-      last_name: parcel.familyname,
-      created_at: new Date(parcel.date_creation),
-      date_last_status: new Date(parcel.date_last_status),
-      phone: parcel.contact_phone,
-      wilaya: parcel.to_wilaya_name,
-      commune: parcel.to_commune_name,
-      center: parcel.current_center_name,
-      product: parcel.product_list,
-      last_status: parcel.last_status,
-      address: parcel.address,
-      payment_status: parcel.payment_status,
-      tracker_id: +parcel.order_id.replace("order_", ""),
-      is_stopdesk: !!parcel.stopdesk_id,
-      price: parcel.price,
-      delivery_fee: parcel.delivery_fee,
-    }));
+    const parcels = parcelsResponse.data.data.map((parcel) => {
+      console.log(
+        `${parcel.tracking} ${+parcel.order_id.replace("order_", "")}`
+      );
+      return {
+        tracking: parcel.tracking,
+        first_name: parcel.firstname,
+        last_name: parcel.familyname,
+        created_at: new Date(parcel.date_creation),
+        date_last_status: new Date(parcel.date_last_status),
+        phone: parcel.contact_phone,
+        wilaya: parcel.to_wilaya_name,
+        commune: parcel.to_commune_name,
+        center: parcel.current_center_name,
+        product: parcel.product_list,
+        last_status: parcel.last_status,
+        address: parcel.address,
+        payment_status: parcel.payment_status,
+        tracker_id: +parcel.order_id.replace("order_", ""),
+        is_stopdesk: !!parcel.stopdesk_id,
+        price: parcel.price,
+        delivery_fee: parcel.delivery_fee,
+      };
+    });
 
     // Extract tracking numbers
     const trackings = parcels.map((parcel) => parcel.tracking);
